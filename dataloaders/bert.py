@@ -29,6 +29,8 @@ class BertDataloader(AbstractDataloader):
         self.train_negative_samples = train_negative_sampler.get_negative_samples()
         self.test_negative_samples = test_negative_sampler.get_negative_samples()
 
+        # self.user_size = None
+
     @classmethod
     def code(cls):
         return 'bert'
@@ -47,6 +49,8 @@ class BertDataloader(AbstractDataloader):
 
     def _get_train_dataset(self):
         dataset = BertTrainDataset(self.train, self.max_len, self.mask_prob, self.CLOZE_MASK_TOKEN, self.item_count, self.rng)
+        # self.user_size = len(dataset.users)
+        # print("dataloaders/bert------set user_size", self.user_size)
         return dataset
 
     def _get_val_loader(self):
@@ -109,8 +113,8 @@ class BertTrainDataset(data_utils.Dataset):
 
         mask_len = self.max_len - len(tokens)
 
-        tokens = [0] * mask_len + tokens
-        labels = [0] * mask_len + labels
+        tokens = [index] + [0] * mask_len + tokens # to extract user index
+        labels = [index] + [0] * mask_len + labels
 
         return torch.LongTensor(tokens), torch.LongTensor(labels)
 
@@ -137,13 +141,13 @@ class BertEvalDataset(data_utils.Dataset):
         answer = self.u2answer[user]
         negs = self.negative_samples[user]
 
-        candidates = answer + negs
-        labels = [1] * len(answer) + [0] * len(negs)
+        candidates = [index] + answer + negs
+        labels = [index] + [1] * len(answer) + [0] * len(negs)
 
         seq = seq + [self.mask_token]
         seq = seq[-self.max_len:]
         padding_len = self.max_len - len(seq)
-        seq = [0] * padding_len + seq
+        seq = [index] + [0] * padding_len + seq
 
         return torch.LongTensor(seq), torch.LongTensor(candidates), torch.LongTensor(labels)
 

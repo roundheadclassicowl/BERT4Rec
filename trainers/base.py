@@ -86,6 +86,9 @@ class AbstractTrainer(metaclass=ABCMeta):
         for batch_idx, batch in enumerate(tqdm_dataloader):
             batch_size = batch[0].size(0)
             batch = [x.to(self.device) for x in batch]
+            # batch = [x[1:].to(self.device) for x in batch]
+            # x_idx = [x[0].to(self.device) for x in batch]
+            # print("trainers/base training------index shape", len(x_idx), x_idx[0].shape)
 
             self.optimizer.zero_grad()
             loss = self.calculate_loss(batch)
@@ -121,6 +124,8 @@ class AbstractTrainer(metaclass=ABCMeta):
             tqdm_dataloader = tqdm(self.val_loader)
             for batch_idx, batch in enumerate(tqdm_dataloader):
                 batch = [x.to(self.device) for x in batch]
+                # x_idx = [x[0].to(self.device) for x in batch]
+                # print("trainers/base val------index shape", len(x_idx), x_idx[0].shape)
 
                 metrics = self.calculate_metrics(batch)
 
@@ -155,6 +160,9 @@ class AbstractTrainer(metaclass=ABCMeta):
             tqdm_dataloader = tqdm(self.test_loader)
             for batch_idx, batch in enumerate(tqdm_dataloader):
                 batch = [x.to(self.device) for x in batch]
+                # batch = [x[1:].to(self.device) for x in batch]
+                # x_idx = [x[0].to(self.device) for x in batch]
+                # print("trainers/base test------index shape", len(x_idx), x_idx[0].shape)
 
                 metrics = self.calculate_metrics(batch)
 

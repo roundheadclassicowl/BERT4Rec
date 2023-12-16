@@ -14,4 +14,6 @@ def dataloader_factory(args):
     dataloader = DATALOADERS[args.dataloader_code]
     dataloader = dataloader(args, dataset)
     train, val, test = dataloader.get_pytorch_dataloaders()
+    args.user_size = dataset.user_count
+    print("dataloaders/init------assign user size to args", args.user_size)
     return train, val, test

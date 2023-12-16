@@ -21,6 +21,7 @@ class AbstractDataset(metaclass=ABCMeta):
         self.min_uc = args.min_uc
         self.min_sc = args.min_sc
         self.split = args.split
+        self.user_count = -1
 
         assert self.min_uc >= 2, 'Need at least 2 ratings per user for validation and test'
 
@@ -63,6 +64,12 @@ class AbstractDataset(metaclass=ABCMeta):
     def preprocess(self):
         dataset_path = self._get_preprocessed_dataset_path()
         if dataset_path.is_file():
+            df = self.load_ratings_df()
+            df = self.make_implicit(df)
+            df = self.filter_triplets(df)
+            df, umap, smap = self.densify_index(df)
+            self.user_count = len(umap)
+            print("user count computed", self.user_count)
             print('Already preprocessed. Skip preprocessing')
             return
         if not dataset_path.parent.is_dir():
@@ -72,6 +79,8 @@ class AbstractDataset(metaclass=ABCMeta):
         df = self.make_implicit(df)
         df = self.filter_triplets(df)
         df, umap, smap = self.densify_index(df)
+        self.user_count = len(umap)
+        print("user count computed", self.user_count)
         train, val, test = self.split_df(df, len(umap))
         dataset = {'train': train,
                    'val': val,

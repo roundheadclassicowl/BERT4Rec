@@ -116,5 +116,10 @@ parser.add_argument('--experiment_description', type=str, default='test')
 
 
 ################
+# Extension
+################
+parser.add_argument('--user_size', type=int, default=0)
+
+################
 args = parser.parse_args()
 set_template(args)

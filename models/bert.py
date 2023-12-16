@@ -14,6 +14,6 @@ class BERTModel(BaseModel):
     def code(cls):
         return 'bert'
 
-    def forward(self, x):
-        x = self.bert(x)
+    def forward(self, x, x_idx):
+        x = self.bert(x, x_idx)
         return self.out(x)

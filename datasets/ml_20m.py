@@ -32,6 +32,7 @@ class ML20MDataset(AbstractDataset):
         folder_path = self._get_rawdata_folder_path()
         file_path = folder_path.joinpath('ratings.csv')
         df = pd.read_csv(file_path)
+        print(df.head(2))
         df.columns = ['uid', 'sid', 'rating', 'timestamp']
         return df
 

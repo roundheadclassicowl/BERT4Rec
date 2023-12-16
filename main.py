@@ -18,9 +18,24 @@ def train():
     if test_model:
         trainer.test()
 
+def investigate():
+    export_root = setup_train(args)
+    print("******setup finished******")
+    train_loader, val_loader, test_loader = dataloader_factory(args)
+    print("******data loaded into dataloaders******")
+    for batch_idx, batch in enumerate(train_loader):
+        seqs, labels = batch
+
+        for seq in seqs:
+            print(seq)
+            print("-------")
+            print(labels[0])
+            break
+        break
 
 if __name__ == '__main__':
     if args.mode == 'train':
+        # investigate()
         train()
     else:
         raise ValueError('Invalid mode')

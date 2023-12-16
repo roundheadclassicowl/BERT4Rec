@@ -6,7 +6,7 @@ def set_template(args):
         args.mode = 'train'
 
         args.dataset_code = 'ml-' + input('Input 1 for ml-1m, 20 for ml-20m: ') + 'm'
-        args.min_rating = 0 if args.dataset_code == 'ml-1m' else 4
+        args.min_rating = 0 if args.dataset_code == 'ml-1m' else 3 # used to be 4
         args.min_uc = 5
         args.min_sc = 0
         args.split = 'leave_one_out'
@@ -42,10 +42,10 @@ def set_template(args):
 
         args.bert_dropout = 0.1
         args.bert_hidden_units = 256
-        args.bert_mask_prob = 0.15
+        args.bert_mask_prob = 0.2 # used to be 0.15
         args.bert_max_len = 100
         args.bert_num_blocks = 2
-        args.bert_num_heads = 4
+        args.bert_num_heads = 4 # used to be 4
     
     elif args.template.startswith('train_dae'):
         args.mode = 'train'
