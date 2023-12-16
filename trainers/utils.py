@@ -46,5 +46,19 @@ def recalls_and_ndcgs_for_ks(scores, labels, ks):
        idcg = torch.Tensor([weights[:min(int(n), k)].sum() for n in answer_count]).to(dcg.device)
        ndcg = (dcg / idcg).mean()
        metrics['NDCG@%d' % k] = ndcg.cpu().item()
+    
+    # Initialize reciprocal rank sum
+    reciprocal_rank_sum = 0.0
+
+    for i in range(rank.size(0)):
+        # Get the index of the relevant item (ground truth)
+        ground_truth_index = labels[i].nonzero(as_tuple=True)[0]
+        # Get the rank of the relevant item
+        rank_of_relevant = (rank[i] == ground_truth_index).nonzero(as_tuple=True)[0] + 1
+        # Add its reciprocal rank to the sum
+        reciprocal_rank_sum += 1.0 / rank_of_relevant.float()
+
+    mrr = reciprocal_rank_sum / rank.size(0)
+    metrics['MRR'] = mrr.item()
 
     return metrics
