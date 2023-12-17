@@ -43,9 +43,3 @@ Just go to the 'baseline' folder and run baseline.ipynb notebook.
    ```bash
    printf '20\ny\n' | python main.py --template train_bert
    ```
-
-# Test Set Results
-
-We test our models on MovieLens-20m dataset.
-
-<img src=Images/test_result.png>
