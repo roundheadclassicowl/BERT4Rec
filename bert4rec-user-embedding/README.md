@@ -1,4 +1,19 @@
-# Introduction
+# User Embedding Contribution
+
+This repo is developed from [a thorough reproduction](https://github.com/jaywonchung/BERT4Rec-VAE-Pytorch) of [the original BERT4Rec paper](https://arxiv.org/pdf/1904.06690.pdf) specifically on the user embedding component. The key changes are listed below in this [commit](https://github.com/roundheadclassicowl/BERT4Rec/commit/8b8f31b1c41dbc2551bc392eb72ab7a81f62d916).
+## How to run
+
+1. Run the following terminal command to start preprocessing the 20M dataset. Terminate the process once it is done.
+
+   ```bash
+   printf '20\ny\n' | python main.py --template train_bert
+   ```
+
+2. Edit two hard-coded path in `models/bert_modules/embedding/genre.py` to find the inverse smap and and `movies.csv`.
+
+3. Rerun the training code above.
+
+# Introduction (content below is from original repo)
 
 This repository implements models from the following two papers:
 
