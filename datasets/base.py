@@ -71,13 +71,19 @@ class AbstractDataset(metaclass=ABCMeta):
         df = self.load_ratings_df()
         df = self.make_implicit(df)
         df = self.filter_triplets(df)
-        df, umap, smap = self.densify_index(df)
+        df, umap, smap, inv_smap = self.densify_index(df)
         train, val, test = self.split_df(df, len(umap))
         dataset = {'train': train,
                    'val': val,
                    'test': test,
                    'umap': umap,
                    'smap': smap}
+        
+        inv_smap_path = self._get_preprocessed_folder_path().joinpath('inv_smap.pkl')
+        if not inv_smap_path.is_file():
+            with inv_smap_path.open('wb') as f:
+                pickle.dump(inv_smap, f)
+
         with dataset_path.open('wb') as f:
             pickle.dump(dataset, f)
 
@@ -132,9 +138,10 @@ class AbstractDataset(metaclass=ABCMeta):
         print('Densifying index')
         umap = {u: i for i, u in enumerate(set(df['uid']))}
         smap = {s: i for i, s in enumerate(set(df['sid']))}
+        inv_smap = {i: s for s, i in smap.items()}
         df['uid'] = df['uid'].map(umap)
         df['sid'] = df['sid'].map(smap)
-        return df, umap, smap
+        return df, umap, smap, inv_smap
 
     def split_df(self, df, user_count):
         if self.args.split == 'leave_one_out':
