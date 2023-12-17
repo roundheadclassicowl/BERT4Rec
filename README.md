@@ -20,17 +20,17 @@ After training, it also asks you whether to run test set evaluation on the train
 
 ## BERT4Rec + Genre Embedding
 
-### Usage
+#### Usage
 
 ## BERT4Rec + User Embedding
 
-### Usage
+#### Usage
 
 ## Baseline
 
 We use popularity-based baseline, which will recommend most-rated movie to users.
 
-### Usage
+#### Usage
 
 Just go to the 'baseline' folder and run baseline.ipynb notebook.
 
