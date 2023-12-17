@@ -1,4 +1,28 @@
-# Introduction
+# Genre Embedding Contribution
+
+This repo is developed from [a thorough reproduction](https://github.com/jaywonchung/BERT4Rec-VAE-Pytorch) of [the original BERT4Rec paper](https://arxiv.org/pdf/1904.06690.pdf) specifically on the genre embedding component. The key changes are listed below:
+
+1. `datasets/base.py`
+
+   The previous reproduction densified the original movieId into a compact integer space. We save this mapping to the disk for later reverse mapping.
+
+2. `models/bert_modules/embedding/genre.py`
+
+   This embedding class averages the embedding vectors of individual genres associated with a movie to form a unified genre embedding. 
+
+## How to run
+
+1. Run the following terminal command to start preprocessing the 20M dataset. Terminate the process once it is done.
+
+   ```bash
+   printf '20\ny\n' | python main.py --template train_bert
+   ```
+
+2. Edit two hard-coded path in `models/bert_modules/embedding/genre.py` to find the inverse smap and and `movies.csv`.
+
+3. Rerun the training code above.
+
+# Introduction (content below is from original repo)
 
 This repository implements models from the following two papers:
 

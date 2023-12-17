@@ -3,10 +3,6 @@ from .token import TokenEmbedding
 from .position import PositionalEmbedding
 from .genre import GenreEmbedding
 
-import pickle
-import pandas as pd
-import torch
-
 
 class BERTEmbedding(nn.Module):
     """
