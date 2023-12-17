@@ -21,10 +21,12 @@ After training, it also asks you whether to run test set evaluation on the train
 ## BERT4Rec + Genre Embedding
 
 #### Usage
+Please go to bert4rec-genre-embed folder for detailed usage.
 
 ## BERT4Rec + User Embedding
 
 #### Usage
+Please go to bert4rec-user-embed folder for detailed usage.
 
 ## Baseline
 
