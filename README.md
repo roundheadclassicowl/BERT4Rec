@@ -1,6 +1,6 @@
 # Introduction
 
-This repository is for our ESE546 Course Project. We attempt to improve BERT4Rec model from the following paper.
+This repository is for our ESE546 Course Project (Project Group 99), Fall 2023. We attempt to improve BERT4Rec model from the following paper.
 
 > **BERT4Rec: Sequential Recommendation with BERT (Sun et al.)**
 
