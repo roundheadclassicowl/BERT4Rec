@@ -1,14 +1,14 @@
 # Introduction
 
-This repository implements models from the following two papers:
+This repository is for our ESE546 Course Project. We attempt to improve BERT4Rec model from the following paper.
 
-> **BERT4Rec: Sequential Recommendation with BERT (Sun et al.)**  
+> **BERT4Rec: Sequential Recommendation with BERT (Sun et al.)**
 
-> **Variational Autoencoders for Collaborative Filtering (Liang et al.)**  
+We incorparate the original BERT4Rec model with genre embeddings and user embedding respectivly. The model and performace is as follows.
 
-and lets you train them on MovieLens-1m and MovieLens-20m.
+The BERT4Rec model in this repo is based on the code from <a href="https://github.com/jaywonchung/BERT4Rec-VAE-Pytorch"> BERT4Rec-VAE-Pytorch</a>. And the baseline model is base on <a href="https://github.com/recommenders-team/recommenders/tree/main/"> Recommenders</a>
 
-# Usage
+# Models and Usage
 
 ## Overall
 
@@ -18,41 +18,21 @@ On running `main.py`, it asks you whether to train on MovieLens-1m or MovieLens-
 
 After training, it also asks you whether to run test set evaluation on the trained model. (Enter y or n)
 
-## BERT4Rec
+## BERT4Rec + Genre Embedding
 
-```bash
-python main.py --template train_bert
-```
+### Usage
 
-## DAE
+## BERT4Rec + User Embedding
 
-```bash
-python main.py --template train_dae
-```
+### Usage
 
-## VAE
+## Baseline
 
-### Search for the optimal beta
+We use popularity-based baseline, which will recommend most-rated movie to users.
 
-```bash
-python main.py --template train_vae_search_beta
-```
+### Usage
 
-### Use the found optimal beta
-
-First, **fill out the optimal beta value in `templates.py`**. Then, run the following.
-
-``` bash
-python main.py --template train_vae_give_beta
-```
-
-<img src=Images/vae_tensorboard.png width=800>
-
-The `Best_beta` plot will help you determine the optimal beta value. It can be seen that the optimal beta value is 0.285.
-
-The gray graph in the `Beta` plot was trained by fixing the beta value to 0.285.
-
-The `NDCG_10` metric shows that the improvement claimed by the paper has been reproduced.
+Just go to the 'baseline' folder and run baseline.ipynb notebook.
 
 ## Examples
 
@@ -62,20 +42,8 @@ The `NDCG_10` metric shows that the improvement claimed by the paper has been re
    printf '20\ny\n' | python main.py --template train_bert
    ```
 
-2. Search for optimal beta for VAE on ML-1m and do not run test set inference
-
-   ```bash
-   printf '1\nn\n' | python main.py --template train_vae_search_beta
-   ```
-  
 # Test Set Results
 
-Numbers under model names indicate the number of hidden layers.
+We test our models on MovieLens-20m dataset.
 
-## MovieLens-1m
-
-<img src=Images/ML1m-results.png>
-
-## MovieLens-20m
-
-<img src=Images/ML20m-results.png>
+<img src=Images/test_result.png>
